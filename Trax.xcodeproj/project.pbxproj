@@ -80,8 +80,6 @@
 				3D1E18CD1BA73BE6005ED90E /* AppDelegate.swift */,
 				3D1E18CF1BA73BE6005ED90E /* ViewController.swift */,
 				3D1E18D11BA73BE6005ED90E /* Main.storyboard */,
-				3D1E18D41BA73BE6005ED90E /* Images.xcassets */,
-				3D1E18D61BA73BE6005ED90E /* LaunchScreen.xib */,
 				3D1E18CB1BA73BE6005ED90E /* Supporting Files */,
 			);
 			path = Trax;
@@ -90,6 +88,8 @@
 		3D1E18CB1BA73BE6005ED90E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3D1E18D61BA73BE6005ED90E /* LaunchScreen.xib */,
+				3D1E18D41BA73BE6005ED90E /* Images.xcassets */,
 				3D1E18CC1BA73BE6005ED90E /* Info.plist */,
 			);
 			name = "Supporting Files";
