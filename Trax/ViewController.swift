@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         let queue = NSOperationQueue.mainQueue()
         let appDelegate = UIApplication.sharedApplication().delegate
         center.addObserverForName(GPXURL.Notification, object: appDelegate, queue: queue){notification in
-            if let url = notification?.userInfo?[GPXURL.Key] as? NSURL{
+            if let url = notification.userInfo?[GPXURL.Key] as? NSURL{
                 self.textView.text =  "Received \(url)"
             }
         }
