@@ -31,6 +31,8 @@ class GPXViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // MARK: - Waypoints
+    
     func clearWaypoints(){
         if mapView?.annotations != nil{
             mapView.removeAnnotations(mapView.annotations as [MKAnnotation])
@@ -42,13 +44,8 @@ class GPXViewController: UIViewController, MKMapViewDelegate {
         mapView.showAnnotations(waypoints, animated: true)
     }
     
-    // MARK: - Constants
-    
-    private struct Constants {
-        static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
-        static let AnnotationViewReuseIdentifier = "waypoint"
-        static let ShowImageSegue = "Show Image"
-    }
+
+    //  MARK: - MKMapViewDelegate
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         var view = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.AnnotationViewReuseIdentifier)
@@ -63,21 +60,33 @@ class GPXViewController: UIViewController, MKMapViewDelegate {
         view?.rightCalloutAccessoryView = nil
         if let waypoint = annotation as? GPX.Waypoint {
             if waypoint.thumbnailURL != nil {
-                view?.leftCalloutAccessoryView = UIImageView(frame: Constants.LeftCalloutFrame)
+                view?.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
             }
-            if waypoint.imageURL != nil {
-                view?.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
-                
+//            if waypoint.imageURL != nil {
+//                view?.rightCalloutAccessoryView = UIButton(type: UIButtonType.DetailDisclosure) as UIButton
+//                
+//            }
+        }
+        return view
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let waypoint = view.annotation as? GPX.Waypoint {
+            if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton {
+                if let imageData = NSData(contentsOfURL: waypoint.thumbnailURL!){
+                    if let image = UIImage(data: imageData){
+                        thumbnailImageButton.setImage(image, forState: .Normal)
+                    }
+                }
             }
         }
-
-        
-        return view
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         performSegueWithIdentifier(Constants.ShowImageSegue, sender: view)
     }
+    
+    // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.ShowImageSegue {
@@ -85,20 +94,6 @@ class GPXViewController: UIViewController, MKMapViewDelegate {
                 if let ivc = segue.destinationViewController as? ImageViewController {
                     ivc.imageURL = waypoint.imageURL
                     ivc.title = waypoint.name
-                }
-            }
-        }
-    }
-    
-    
-    
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if let waypoint = view.annotation as? GPX.Waypoint {
-            if let thumbnailImageView = view.leftCalloutAccessoryView as? UIImageView {
-                if let imageData = NSData(contentsOfURL: waypoint.thumbnailURL!){
-                    if let image = UIImage(data: imageData){
-                        thumbnailImageView.image = image
-                    }
                 }
             }
         }
@@ -116,7 +111,15 @@ class GPXViewController: UIViewController, MKMapViewDelegate {
             }
         }
         
-        gpxURL = NSURL(string: "http://cs193p.stanford.edu/Vacation.gpx")
+        gpxURL = NSURL(string: "http://web.stanford.edu/class/cs193p/Vacation.gpx")
+    }
+    
+    // MARK: - Constants
+    
+    private struct Constants {
+        static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
+        static let AnnotationViewReuseIdentifier = "waypoint"
+        static let ShowImageSegue = "Show Image"
     }
 }
 
