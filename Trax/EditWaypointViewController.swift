@@ -101,6 +101,7 @@ class EditWaypointViewController: UIViewController, UITextFieldDelegate, UIImage
         }
         imageView.image = image
         makeRoomForImage()
+        saveImageInWaypoint()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -108,6 +109,20 @@ class EditWaypointViewController: UIViewController, UITextFieldDelegate, UIImage
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func saveImageInWaypoint() {
+        if let image = imageView.image{
+            if let imageData = UIImageJPEGRepresentation(image, 1.0) {
+                let fileManager = NSFileManager()
+                if let docsDir = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first {
+                    let unique = NSDate.timeIntervalSinceReferenceDate()
+                    let url = docsDir.URLByAppendingPathComponent("\(unique).jpg")
+                    if imageData.writeToURL(url, atomically: true){
+                        waypointToEdit?.links = [GPX.Link(href: url.absoluteString)]
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension EditWaypointViewController

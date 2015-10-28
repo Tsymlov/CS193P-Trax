@@ -158,10 +158,10 @@
             </objects>
             <point key="canvasLocation" x="2057" y="-347"/>
         </scene>
-        <!--Image View Controller-->
+        <!--Waypoint Image View Controller-->
         <scene sceneID="pcy-ak-N01">
             <objects>
-                <viewController id="2gy-6k-6ie" customClass="ImageViewController" customModule="Trax" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2gy-6k-6ie" customClass="WaypointImageViewController" customModule="Trax" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MoU-Ry-Whm"/>
                         <viewControllerLayoutGuide type="bottom" id="bQq-aq-v3a"/>
@@ -178,6 +178,17 @@
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                                 <animations/>
                             </activityIndicatorView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJv-Yq-iU9">
+                                <rect key="frame" x="380" y="380" width="200" height="200"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="EiG-BN-BYR"/>
+                                    <constraint firstAttribute="width" constant="200" id="dll-k8-dlu"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Byw-9q-co1" kind="embed" identifier="Embed Map" id="vwt-pb-ZN1"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -185,8 +196,10 @@
                             <constraint firstAttribute="centerY" secondItem="ED2-Jw-JUt" secondAttribute="centerY" id="1Vi-SC-CAc"/>
                             <constraint firstAttribute="centerX" secondItem="ED2-Jw-JUt" secondAttribute="centerX" id="5zA-c6-yRi"/>
                             <constraint firstItem="0he-MO-5j8" firstAttribute="top" secondItem="3D3-n5-Gzh" secondAttribute="top" id="Csw-6D-jNj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UJv-Yq-iU9" secondAttribute="trailing" id="LIg-Am-zbS"/>
                             <constraint firstItem="0he-MO-5j8" firstAttribute="bottom" secondItem="bQq-aq-v3a" secondAttribute="top" id="jqA-cA-Vaw"/>
                             <constraint firstItem="0he-MO-5j8" firstAttribute="leading" secondItem="3D3-n5-Gzh" secondAttribute="leading" id="qSA-ol-kkb"/>
+                            <constraint firstItem="bQq-aq-v3a" firstAttribute="top" secondItem="UJv-Yq-iU9" secondAttribute="bottom" constant="20" id="x2h-Wp-rf2"/>
                             <constraint firstAttribute="trailing" secondItem="0he-MO-5j8" secondAttribute="trailing" id="yww-cS-7oT"/>
                         </constraints>
                     </view>
@@ -237,11 +250,79 @@
             </objects>
             <point key="canvasLocation" x="1245" y="-347"/>
         </scene>
+        <!--Simple Map View Controller-->
+        <scene sceneID="WOL-Rr-KYE">
+            <objects>
+                <viewController id="Byw-9q-co1" customClass="SimpleMapViewController" customModule="Trax" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="y0U-Kg-sof">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vgk-ex-Wua">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="LQ5-PM-VZz"/>
+                                    <constraint firstAttribute="height" constant="200" id="iKW-21-ogS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="LQ5-PM-VZz"/>
+                                        <exclude reference="iKW-21-ogS"/>
+                                    </mask>
+                                </variation>
+                            </mapView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="top" secondItem="y0U-Kg-sof" secondAttribute="top" id="3lY-4O-uqQ"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="top" secondItem="y0U-Kg-sof" secondAttribute="top" id="9XZ-V7-CQ0"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="leading" secondItem="y0U-Kg-sof" secondAttribute="leading" id="Anh-Ua-Uh0"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="top" secondItem="y0U-Kg-sof" secondAttribute="topMargin" id="C2M-hW-nkN"/>
+                            <constraint firstAttribute="trailing" secondItem="vgk-ex-Wua" secondAttribute="trailing" id="Cgn-Rx-ar3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vgk-ex-Wua" secondAttribute="trailing" constant="-16" id="EZY-28-nqA"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="top" secondItem="y0U-Kg-sof" secondAttribute="topMargin" id="Joa-Nv-K6G"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="bottom" secondItem="y0U-Kg-sof" secondAttribute="bottomMargin" id="T9w-29-0UI"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="centerX" secondItem="y0U-Kg-sof" secondAttribute="centerX" id="TEp-tu-ke0"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="leading" secondItem="y0U-Kg-sof" secondAttribute="leading" id="YFj-fb-39n"/>
+                            <constraint firstAttribute="bottom" secondItem="vgk-ex-Wua" secondAttribute="bottom" id="Yfr-Vo-FcF"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="top" secondItem="y0U-Kg-sof" secondAttribute="top" id="a9E-V8-5B7"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="bottom" secondItem="y0U-Kg-sof" secondAttribute="bottomMargin" id="kn8-Xm-irN"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="leading" secondItem="y0U-Kg-sof" secondAttribute="leading" id="mLS-yQ-Rh2"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="leading" secondItem="y0U-Kg-sof" secondAttribute="leadingMargin" constant="-16" id="wgK-rD-XBH"/>
+                            <constraint firstItem="vgk-ex-Wua" firstAttribute="centerY" secondItem="y0U-Kg-sof" secondAttribute="centerY" id="y9F-B5-bqi"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="3lY-4O-uqQ"/>
+                                <exclude reference="C2M-hW-nkN"/>
+                                <exclude reference="EZY-28-nqA"/>
+                                <exclude reference="Joa-Nv-K6G"/>
+                                <exclude reference="TEp-tu-ke0"/>
+                                <exclude reference="YFj-fb-39n"/>
+                                <exclude reference="Yfr-Vo-FcF"/>
+                                <exclude reference="a9E-V8-5B7"/>
+                                <exclude reference="kn8-Xm-irN"/>
+                                <exclude reference="mLS-yQ-Rh2"/>
+                                <exclude reference="wgK-rD-XBH"/>
+                                <exclude reference="y9F-B5-bqi"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="vgk-ex-Wua" id="mxS-Fi-Tdz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lbL-mV-Vot" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2645" y="400"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Camera" width="38" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Xv-qb-GrV"/>
+        <segue reference="r2e-it-kj0"/>
     </inferredMetricsTieBreakers>
 </document>

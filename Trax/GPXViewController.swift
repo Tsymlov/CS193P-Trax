@@ -83,10 +83,17 @@ class GPXViewController: UIViewController, MKMapViewDelegate, UIPopoverPresentat
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         if let waypoint = view.annotation as? GPX.Waypoint {
-            if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton {
-                if let imageData = NSData(contentsOfURL: waypoint.thumbnailURL!){
-                    if let image = UIImage(data: imageData){
-                        thumbnailImageButton.setImage(image, forState: .Normal)
+            if let url = waypoint.thumbnailURL {
+                
+                if view.leftCalloutAccessoryView == nil {
+                    view.leftCalloutAccessoryView = UIButton(frame: Constants.LeftCalloutFrame)
+                }
+                
+                if let thumbnailImageButton = view.leftCalloutAccessoryView as? UIButton {
+                    if let imageData = NSData(contentsOfURL: url){
+                        if let image = UIImage(data: imageData){
+                            thumbnailImageButton.setImage(image, forState: .Normal)
+                        }
                     }
                 }
             }
@@ -109,7 +116,10 @@ class GPXViewController: UIViewController, MKMapViewDelegate, UIPopoverPresentat
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == Constants.ShowImageSegue {
             if let waypoint = (sender as? MKAnnotationView)?.annotation as? GPX.Waypoint {
-                if let ivc = segue.destinationViewController.contentViewController as? ImageViewController {
+                
+                if let wivc = segue.destinationViewController.contentViewController as? WaypointImageViewController {
+                    wivc.waypoint = waypoint
+                }else if let ivc = segue.destinationViewController.contentViewController as? ImageViewController {
                     ivc.imageURL = waypoint.imageURL
                     ivc.title = waypoint.name
                 }
