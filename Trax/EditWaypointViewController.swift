@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class EditWaypointViewController: UIViewController, UITextFieldDelegate {
+class EditWaypointViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var waypointToEdit: EditableWaypoint?{
         didSet{
@@ -73,7 +74,7 @@ class EditWaypointViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    // MARK: - Imgae
+    // MARK: - Image
     
     var imageView = UIImageView()
     @IBOutlet weak var imageViewContainer: UIView! {
@@ -82,7 +83,33 @@ class EditWaypointViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func takePhoto(sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.Camera){
+            let picker = UIImagePickerController()
+            picker.sourceType = .Camera
+            picker.mediaTypes = [kUTTypeImage as String]
+            picker.delegate = self
+            picker.allowsEditing = true
+            presentViewController(picker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        var image = info[UIImagePickerControllerEditedImage] as? UIImage
+        if image == nil {
+            image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        }
+        imageView.image = image
+        makeRoomForImage()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
 }
+
 extension EditWaypointViewController
 {
     func updateImage() {
